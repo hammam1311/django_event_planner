@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
+
 {% block content %}
+<!-- the one below -->
 <header class="masthead text-center text-white">
+
+
+  <!-- <style>
+    body
+    {
+    background: url("{% static 'img/wp-all.jpg'%}")no-repeat center center fixed ;
+    background-size: cover
+  }
+  </style> -->
   <div class="masthead-content">
-    <div class="container">
+
+      <div class="container">
         <div class="jumbotron">
           <h2 class="masthead-subheading mb-0">Sign Up</h2>
           <form action="{% url 'signup' %}" method="POST">
@@ -12,11 +25,12 @@
             <input class = "btn btn-primary btn-xl rounded-pill mt-5" type="submit" value="Sign Up">
           </form>
       </div>
-    </div>
+      </div>
   </div>
-  <div class="bg-circle-1 bg-circle"></div>
+
+  <!-- <div class="bg-circle-1 bg-circle"></div>
   <div class="bg-circle-2 bg-circle"></div>
   <div class="bg-circle-3 bg-circle"></div>
-  <div class="bg-circle-4 bg-circle"></div>
+  <div class="bg-circle-4 bg-circle"></div> -->
 </header>
 {% endblock %}

@@ -9,14 +9,21 @@
       {% if request.user.is_anonymous %}
         <a href="{% url 'signup' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Sign up to find events!</a>
       {% else %}
-        <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5">Find events!</a>
+        <a href="{% url 'event-list' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Find events!</a>
       {% endif %}
     </div>
+    <blockquote class="blockquote text-center">
+      <br><br>
+
+</blockquote>
   </div>
-  <div class="bg-circle-1 bg-circle"></div>
+  <!-- <div class="bg-circle-1 bg-circle"></div>
   <div class="bg-circle-2 bg-circle"></div>
   <div class="bg-circle-3 bg-circle"></div>
-  <div class="bg-circle-4 bg-circle"></div>
+  <div class="bg-circle-4 bg-circle"></div> -->
+  <!-- <h5 class="mb-0">Those who dont go to events are NOOBS</h5>
+  <p class="mb-0">Hamza ..</p> -->
+
 </header>
 
 

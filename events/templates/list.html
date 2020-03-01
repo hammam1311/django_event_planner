@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<header class="masthead text-center text-white" style="background-color:#CCCCCC	;" >
+  <div class="masthead-content">
+    <div class="container">
+      <!-- .......................................Dashboard.............................. -->
+<!-- ....................................User organized events ........................... -->
+<h2 class="masthead-subheading mb-0" style="color: white;">Events I organized</h2>
+<div class="card-body">
+  {% for event in events %}
+  {%if request.user == event.organizer%}
+
+    <a href="{% url 'event-detail' event.id %}" class="btn btn-outline-dark"><h1 class="card-title">{{event.title}}  <h4>{{event.date}}</h4></h1></a>
+      <br><br>
+
+      {%endif%}
+  {% endfor %}
+</div>
+<button type="button" class="btn btn-danger btn-lg">
+    <a style="color: white; " href="{% url 'events-create'%}" role="button">Create an event</a>
+</button>
+
+
+
+
+
+
+<!-- ..................................................All Upcomig events ................... -->
+          <h3 class="masthead-subheading mb-0" style="color: white;">Upcomig Events</h3>
+          <div class="card-body">
+            {% for event in events %}
+            {%if not request.user == event.organizer%}
+              <a href="{% url 'event-detail' event.id %}" class="btn btn-outline-dark"><h1 class="card-title">{{event.title}}  <h6>{{event.date}}</h6></h1></a>
+                <br><br>
+                {%endif%}
+            {% endfor %}
+            <h3 class="masthead-subheading mb-0" style="color: white;">Events I'm attinding</h3>
+
+            <br><br>
+            <h3 class="masthead-subheading mb-0" style="color: white;">Events I attended</h3>
+
+
+          </div>
+
+
+      </div>
+    </div>
+
+<!-- ..........................................Events I attinded................. -->
+
+
+
+
+
+
+
+  <div class="bg-circle-1 bg-circle"></div>
+  <div class="bg-circle-2 bg-circle"></div>
+  <div class="bg-circle-3 bg-circle"></div>
+  <div class="bg-circle-4 bg-circle"></div>
+
+
+
+
+</header>
+{% endblock %}
