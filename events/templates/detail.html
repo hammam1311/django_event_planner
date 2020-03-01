@@ -7,37 +7,17 @@
 {% block content %}
 
 
+<!-- بوز -->
 
-
-{%if event.type == Comedy %}
       <style>
         body
         {
-        background: url("{% static 'img/wp-co.jpg'%}")no-repeat center center fixed ;
+        background: url({{pic}})no-repeat center center fixed ;
         background-size: cover
       }
       </style>
-{%endif%}
 
-{%if event.type == Musical %}
-    <style>
-      body {
 
-      background: url("{% static 'img/wp-music.jpg'%}")no-repeat center center fixed ;
-      background-size: cover
-    }
-    </style>
-{%endif%}
-
-{%if event.type == Educational %}
-    <style>
-      body {
-      background: url("{% static 'img/wp-edu.jpg'%}")no-repeat center center fixed ;
-      background-size: cover
-    }
-    </style>
-
-{%endif%}
 
 
 <div class="container ">
@@ -73,7 +53,8 @@
       {%if not event.tickets == total%}
         <a class="btn btn-outline-success btn-lg"   href="{% url 'event-book' event.id total %}" role="button">Book Now!</a>
         {% else %}
-        <a class="btn btn-outline-success btn-lg"  role="button">Full :(</a>
+        <a class="btn btn-outline-success btn-lg"  role="button" disable>Full :(</a>
+        <!-- make not clickable -->
         {% endif %}
     </div>
 

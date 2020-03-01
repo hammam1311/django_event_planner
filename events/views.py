@@ -6,14 +6,37 @@ from django.contrib import messages
 from .models import Event , BookEvent
 from .forms import EventForm , BookEventForm
 from datetime import datetime
-
+from django.db.models import Q
 
 
 
 # ..................................list...............
 def event_list(request):
+    events=Event.objects.all()
+    date_check=Event.objects.filter(date__gte=datetime.today())
+    booked=BookEvent.objects.filter(booker=request.user)
+    passed=[]
+    future=[]
+    for book in booked :
+        if book.event.date>datetime.today().date():
+            future.append(book)
+        if book.event.date<=datetime.today().date():
+            passed.append(book)
+
+    events=Event.objects.filter(date__gte=datetime.today())
+    query = request.GET.get("q")
+    if query:
+        events = events.filter(
+            Q(title__icontains=query)|
+            Q(description__icontains=query)|
+            Q(organizer__username__icontains=query)
+            ).distinct()
     context={
-    "events":Event.objects.filter(date__gte=datetime.today())
+    "events":events,
+    "passed":passed,
+    "future":future
+
+
     }
     return render(request,"list.html",context)
 
@@ -25,10 +48,20 @@ def event_detail(request,event_id):
     numtic = 0
     for tic in tickets:
         numtic += tic.number_of_tickets
+    if event_obj.event_type ==  "Comedy" :
+        pic = "{% static 'img/wp-Comedy.jpg'%}"
+    elif event_obj.event_type ==  "Educational" :
+        pic = "{% static 'img/wp-Educational.jpg'%}"
+    elif event_obj.event_type ==  "Musical" :
+        pic = "{% static 'img/wp-Musical.jpg'%}"
+    else:
+        pic ="{% static 'img/wp-all.jpg'%}"
+
     context={
     "event":event_obj,
     "tickets":tickets,
     "total":numtic,
+    "pic":pic
     }
     return render(request,"detail.html",context)
 
@@ -55,7 +88,7 @@ def event_create(request):
 def event_update(request, event_id):
     event_obj = Event.objects.get(id=event_id)
     if not request.user.is_staff and request.user != event_obj.organizer:
-        return redirect("unauthorized")
+        return redirect("signup")
 
     form = EventForm(instance=event_obj)
     if request.method == "POST":
@@ -74,6 +107,7 @@ def event_update(request, event_id):
 def book_event (request,event_id,tickets_total):
     form = BookEventForm()
     event_obj = Event.objects.get(id=event_id)
+    bookers = BookEvent.objects.filter(event=event_obj)
     if tickets_total == event_obj.tickets:
         return redirect('event-detail',event_id)
     if request.user.is_anonymous:
@@ -85,9 +119,17 @@ def book_event (request,event_id,tickets_total):
             if ticket.number_of_tickets+tickets_total > event_obj.tickets:
                 messages.warning(request, "not enough tickets sry :( ")
                 return redirect('event-detail',event_id)
+            for booker in bookers:
+                if booker.booker == request.user:
+                    booker.number_of_tickets+=ticket.number_of_tickets
+                    booker.save()
+                    messages.success(request, "Booked Successfully yaay!")
+                    return redirect('event-detail',event_id)
+
             ticket.booker = request.user
             ticket.event = event_obj
             ticket.save()
+
             messages.success(request, "Booked Successfully yaay!")
             return redirect('event-detail',event_id)
     context = {

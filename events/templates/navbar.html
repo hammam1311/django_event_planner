@@ -21,6 +21,10 @@
           <a class="nav-link" href="{% url 'event-list' %}">{{ request.user }}</a>
         </li>
         {% endif %}
+        <form action="{% url 'event-list' %}" method="GET">
+          <input type="text" name='q' placeholder="Search here...">
+          <input type="submit" value="Search">
+        </form>
       </ul>
     </div>
   </div>

@@ -6,7 +6,7 @@ urlpatterns = [
 	path('',home, name='home'),
 
 	#..............................................
-	path('events_dashboard/', event_list, name='event-list'),
+	path('dashboard/', event_list, name='event-list'),
 	path('events/<int:event_id>/', event_detail, name='event-detail'),
 	path('events/<int:event_id>/update', event_update, name='event-update'),
 	path('events/create', event_create, name='events-create'),
