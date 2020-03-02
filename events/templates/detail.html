@@ -26,7 +26,7 @@
 <div class="col-md-6 mt-5">
   <div class="card">
 
-    <h1 class="card-header"><center>Event Info</center></h1>
+    <h1 class="card-header">Event Info</center></h1>
   <div class="card-body">
     <h2>
       <b>Event title :  </b>  <small>{{event.title}}</small>
@@ -53,38 +53,20 @@
       {%if not event.tickets == total%}
         <a class="btn btn-outline-success btn-lg"   href="{% url 'event-book' event.id total %}" role="button">Book Now!</a>
         {% else %}
-        <a class="btn btn-outline-success btn-lg"  role="button" disable>Full :(</a>
+        <a class="btn btn-outline-success btn-lg disabled"  role="button" >Full :(</a>
         <!-- make not clickable -->
         {% endif %}
     </div>
 
-
   </div>
+
 </div>
-{%if event.organizer == request.user  %}
-<div class=" mt-5">
-<table class="table table-dark  table-hover">
-<thead>
-<tr>
-  <th scope="col"><h4>User</h4></th>
-  <th scope="col"><h4>Tickets Booked</h4></th>
-</tr>
-</thead>
-<tbody>
-{% for book in tickets %}
+<div class="col-md-6 mt-5">
 
-<tr>
-
-  <td><h4>{{book.booker}}</h4></td>
-  <td><center><h4>{{book.number_of_tickets}}</h4></center></td>
-
-</tr>
-
-{% endfor %}
-</tbody>
-</table>
+{% if event.logo %}
+    <img class="card-img-top" src="{{event.logo.url}}" alt="Hey Noob.">
+  {% endif %}
 </div>
-{% endif %}
 
   <!-- <div class="card h-100" >
   <h1 class="card-header"><center>Event Info</center></h1> -->
@@ -117,10 +99,36 @@
     <div class="card-body"><button type="button" class="btn btn-danger btn-lg">
         <a style="color: white; " href="{% url 'event-book' event.id total %}" role="button">Book Now!</a>
     </button></div> -->
-  </div>
-</div>
+
 </div>
 
+{%if event.organizer == request.user  %}
+<div class=" mt-5 card border-dark mb-3" style="max-width: 2500px ;border :solid">
+<table class="table table table-hover">
+<thead class ="thead-dark">
+<tr>
+  <th scope="col"><center><h4>User</h4></center></th>
+  <th scope="col"><center><h4>Tickets Booked</h4></center></th>
+</tr>
+</thead>
+<tbody>
+{% for book in tickets %}
+
+<tr>
+  <td><center><h4>{{book.booker}}</h4></center></td>
+  <td><center><h4>{{book.number_of_tickets}}</h4></center></td>
+
+</tr>
+
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endif %}
+
+</div>
+
+<br><br>
 
 
     <!-- <h5 class="card-title">Event title : </h5>
@@ -132,7 +140,6 @@
     <p class="card-text">Date : {{event.date}}</p>
     <p class="card-text">Tickets : {{event.tickets}}</p>
     <p class="card-text">Event type : {{event.event_type}}</p> -->
-
 
 
 {% endblock content %}

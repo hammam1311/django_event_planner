@@ -19,7 +19,10 @@
           <a style="color: white; " href="{% url 'events-create'%}" role="button">Create an event</a>
       </button>
 
-      <br><br>
+      <br><br>                  <br>
+      <br>
+      <br>
+
                 <div class="card border-dark mb-3" style="max-width: 2500px ;border :solid">
                   <div class="row no-gutters">
                     <div class="col-md-4">
@@ -27,7 +30,7 @@
                     </div>
                     <div class="col-md-8">
                       <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
+                        <h5 class="card-title">*Musical event*</h5>
                         {% for event in events %}
 
                         {% if event.event_type == "Musical" %}
@@ -51,7 +54,7 @@
       <!-- <span class="border border-dark solid"> -->
           <div class="col-md-8 ">
             <div class="card-body">
-              <h5 class="card-title">Event Comedy</h5>
+              <h5 class="card-title">*Comedy events*</h5>
                 {% for event in events %}
 
                 {% if event.event_type == "Comedy" %}
@@ -87,7 +90,7 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
+              <h5 class="card-title">*Educational events*</h5>
               {% for event in events %}
 
               {% if event.event_type == "Educational" %}
@@ -115,12 +118,6 @@
       {%endif%}
   {% endfor %}
 </div>
-<button type="button" class="btn btn-danger btn-lg">
-    <a style="color: white; " href="{% url 'events-create'%}" role="button">Create an event</a>
-</button>
-
-
-
 
 
 
@@ -145,7 +142,7 @@
             <br><br>
             <h3 class="masthead-subheading mb-0" style="color: white;">Events I attended</h3>
             {% for event in passed %}
-              <a href="{% url 'event-detail' event.event.id %}" class="btn btn-outline-dark"><h1 class="card-title">{{event.title}}  <h6>{{event.date}}</h6></h1></a>
+              <a href="{% url 'event-detail' event.event.id %}" class="btn btn-outline-dark"><h1 class="card-title">{{event.event.title}}  <h6>{{event.event.date}}</h6></h1></a>
                 <br><br>
             {% endfor %}
           </div>

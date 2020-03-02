@@ -17,8 +17,24 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+from api import views
 
 urlpatterns = [
+# ............................api .....................
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', views.Register.as_view(), name="register"),
+    path('upcoming_list/', views.EventsList.as_view(), name="upcoming-list"),
+
+
+
+
+
+# .....................................................
     path('admin/', admin.site.urls),
     path('', include('events.urls')),
 ]
