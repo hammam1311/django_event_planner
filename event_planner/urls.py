@@ -29,6 +29,17 @@ urlpatterns = [
     path('api/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/', views.Register.as_view(), name="register"),
     path('upcoming_list/', views.EventsList.as_view(), name="upcoming-list"),
+    path('organizer_list/', views.EventOrganizersList.as_view(), name="organizer-list"),
+    path('api/event/<int:event_id>/update', views.UpdateEvent.as_view(), name="update-event-api"),
+    path('api/event/create', views.CreateEvent.as_view(), name="create-event-api"),
+    path('api/event/book', views.BookEventView.as_view(), name="book-event-api"),
+    path('api/event/<int:event_id>/booked', views.BookedList.as_view(), name="booked-event-api"),
+    path('api/event/<int:event_id>/mybookers', views.MyBookers.as_view(), name="mybookers-event-api"),
+
+
+
+
+
 
 
 

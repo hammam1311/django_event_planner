@@ -21,125 +21,81 @@
 
 
 <div class="container ">
-<div class="row mt-5 mb-5">
+  <div class="row mt-5 mb-5">
 
-<div class="col-md-6 mt-5">
-  <div class="card">
+  <div class="col-md-6 mt-5">
+    <div class="card">
 
-    <h1 class="card-header">Event Info</center></h1>
-  <div class="card-body">
-    <h2>
-      <b>Event title :  </b>  <small>{{event.title}}</small>
-      <br>
-      <b>Description :  </b> <small>{{event.description}}</small>
-      <br>
-      <b>Event date:  </b><small>{{event.date }}</small>
-      <br>
-      <b>Organizer:  </b><small>{{event.organizer}}</small>
-      <br>
-      <b>Price : </b><small>{{event.price}}</small>
-      <br>
-      <b>booked / total tickets :  </b><small>{{total}}/{{event.tickets }}</small>
-      <br>
-      <b>Event type :  </b><small>{{event.event_type}}</small><br>
-      <b>Event location:  </b><small>{{event.location}}</small><br>
-      <b>Event time :  </b><small>{{event.time}}</small><br>
-    </h2>
+      <h1 class="card-header">Event Info</center></h1>
+    <div class="card-body">
+      <h2>
+        <b>Event title :  </b>  <small>{{event.title}}</small>
+        <br>
+        <b>Description :  </b> <small>{{event.description}}</small>
+        <br>
+        <b>Event date:  </b><small>{{event.date }}</small>
+        <br>
+        <b>Organizer:  </b><small>{{event.organizer}}</small>
+        <br>
+        <b>Price : </b><small>{{event.price}}</small>
+        <br>
+        <b>booked / total tickets :  </b><small>{{total}}/{{event.tickets }}</small>
+        <br>
+        <b>Event type :  </b><small>{{event.event_type}}</small><br>
+        <b>Event location:  </b><small>{{event.location}}</small><br>
+        <b>Event time :  </b><small>{{event.time}}</small><br>
+      </h2>
 
-      {%if event.organizer == request.user  %}
-      <a class="btn btn-outline-danger btn-lg"   href="{% url 'event-update' event.id %}" role="button">Update</a>
+        {%if event.organizer == request.user  %}
+        <a class="btn btn-outline-danger btn-lg"   href="{% url 'event-update' event.id %}" role="button">Update</a>
 
-        {% endif %}
-      {%if not event.tickets == total%}
-        <a class="btn btn-outline-success btn-lg"   href="{% url 'event-book' event.id total %}" role="button">Book Now!</a>
-        {% else %}
-        <a class="btn btn-outline-success btn-lg disabled"  role="button" >Full :(</a>
-        <!-- make not clickable -->
-        {% endif %}
+          {% endif %}
+        {%if not event.tickets == total%}
+          <a class="btn btn-outline-success btn-lg"   href="{% url 'event-book' event.id total %}" role="button">Book Now!</a>
+          {% else %}
+          <a class="btn btn-outline-success btn-lg disabled"  role="button" >Full :(</a>
+          <!-- make not clickable -->
+          {% endif %}
+      </div>
+
     </div>
 
   </div>
+  <div class="col-md-6 mt-5">
 
-</div>
-<div class="col-md-6 mt-5">
+  {% if event.logo %}
+      <img class="card-img-top" src="{{event.logo.url}}" alt="Hey Noob.">
+    {% endif %}
+  </div>
 
-{% if event.logo %}
-    <img class="card-img-top" src="{{event.logo.url}}" alt="Hey Noob.">
+
+
+  </div>
+
+  {%if event.organizer == request.user  %}
+    <div class=" mt-5 card border-dark mb-3" style="max-width: 2500px ;border :solid">
+      <table class="table table table-hover">
+        <thead class ="thead-dark">
+          <tr>
+            <th scope="col"><center><h4>User</h4></center></th>
+            <th scope="col"><center><h4>Tickets Booked</h4></center></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for book in tickets %}
+            <tr>
+              <td><center><h4>{{book.booker}}</h4></center></td>
+              <td><center><h4>{{book.number_of_tickets}}</h4></center></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   {% endif %}
-</div>
 
-  <!-- <div class="card h-100" >
-  <h1 class="card-header"><center>Event Info</center></h1> -->
-  <!-- <div class="card-body">
-    <div class="card-body"><h1><b>Event title :</b>  <small>{{event.title}}</small><br><b>Description :</b><small>{{event.description}}</h1>
-    <h5 class="card-title">Description :</h5>
-    <p class="card-text"> {{event.description|linebreaks}}</p></div> -->
-
-    <!-- <div class="card-body"><h5 class="card-title"> </h5>
-    <p class="card-text"></p></div>
-
-    <div class="card-body"><h5 class="card-title"></h5>
-    <p class="card-text"></p></div>
-<div class="card-body"> -->
-    <!-- <h5 class="card-title"></h5>
-    <p class="card-text"></p></div>
-<div class="card-body">
-    <h5 class="card-title"></h5>
-    <p class="card-text"></p></div>
-<div class="card-body"> -->
-    <!-- <h5 class="card-title"> </h5>
-    <p class="card-text"></p></div> -->
-    <!-- <div class="col-md-4">
-        <a href="{% url 'event-update' event.id %}" class="btn btn-outline-primary btn-block">Update</a>
-    </div> -->
-<!-- <div class="card-body">
-    <button type="button" class="btn btn-danger btn-lg">
-        <a style="color: white; " href="{% url 'event-update' event.id %}" role="button">Update</a>
-    </button></div>
-    <div class="card-body"><button type="button" class="btn btn-danger btn-lg">
-        <a style="color: white; " href="{% url 'event-book' event.id total %}" role="button">Book Now!</a>
-    </button></div> -->
-
-</div>
-
-{%if event.organizer == request.user  %}
-<div class=" mt-5 card border-dark mb-3" style="max-width: 2500px ;border :solid">
-<table class="table table table-hover">
-<thead class ="thead-dark">
-<tr>
-  <th scope="col"><center><h4>User</h4></center></th>
-  <th scope="col"><center><h4>Tickets Booked</h4></center></th>
-</tr>
-</thead>
-<tbody>
-{% for book in tickets %}
-
-<tr>
-  <td><center><h4>{{book.booker}}</h4></center></td>
-  <td><center><h4>{{book.number_of_tickets}}</h4></center></td>
-
-</tr>
-
-{% endfor %}
-</tbody>
-</table>
-</div>
-{% endif %}
-
-</div>
+  </div>
 
 <br><br>
-
-
-    <!-- <h5 class="card-title">Event title : </h5>
-    <p class="card-text">{{event.title}}</p>
-
-    <!-- <p class="card-text">Description : {{event.description|linebreaks}}</p> -->
-    <!-- <p class="card-text">Organizer: {{event.organizer}}</p>
-    <p class="card-text">Price :{{event.price}}</p>
-    <p class="card-text">Date : {{event.date}}</p>
-    <p class="card-text">Tickets : {{event.tickets}}</p>
-    <p class="card-text">Event type : {{event.event_type}}</p> -->
 
 
 {% endblock content %}

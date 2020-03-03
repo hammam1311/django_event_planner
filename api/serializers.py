@@ -26,3 +26,28 @@ class EventSerializer(serializers.ModelSerializer):
     # def get_upcaoming_events(self,obj):
     #     events=Event.objects.filter(organizer=obj.organizer, date__gt=datetime.today())
     #     return EventSerializer(booking,many=True).data
+class BookEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookEvent
+        fields = '__all__'
+
+class UpdateSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = Event
+        exclude = ['organizer',]
+
+# class BookedSerializer(serializers.ModelSerializer):
+#     # booker = serializers.SerializerMethodField()
+#     class Meta :
+#         model = BookEvent
+#         fields =  '__all__'
+#     # def get_booker(self,obj):
+#     #     return BookEvent.objects.filter(booker=request.user)
+#
+# # class BookedSerializer(serializers.ModelSerializer):
+#     booker = serializers.SerializerMethodField()
+#     class Meta :
+#         model = BookEvent
+#         fields = ['booker']
+#     def get_booker(self,obj):
+#         return BookEvent.objects.filter(booker=request.user)
