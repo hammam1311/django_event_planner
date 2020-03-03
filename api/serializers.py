@@ -25,29 +25,31 @@ class EventSerializer(serializers.ModelSerializer):
         # fields =['title','description','organizer','date','price',tickets','event_type','location','time','logo']
     # def get_upcaoming_events(self,obj):
     #     events=Event.objects.filter(organizer=obj.organizer, date__gt=datetime.today())
-    #     return EventSerializer(booking,many=True).data
+
+
+class EventTitleSerializer(serializers.ModelSerializer):
+    # organizer = serializers.SerializerMethodField()
+    class Meta:
+        model = Event
+        fields = ['id','description',]
+    # def get_organizer(self,obj):
+    #         return self.request.user
+
+
 class BookEventSerializer(serializers.ModelSerializer):
+    event = EventTitleSerializer()
     class Meta:
         model = BookEvent
-        fields = '__all__'
+        fields = ['event','booker','number_of_tickets']
 
 class UpdateSerializer(serializers.ModelSerializer):
     class Meta :
         model = Event
-        exclude = ['organizer',]
+        exclude = ['organizer']
 
-# class BookedSerializer(serializers.ModelSerializer):
-#     # booker = serializers.SerializerMethodField()
-#     class Meta :
-#         model = BookEvent
-#         fields =  '__all__'
-#     # def get_booker(self,obj):
-#     #     return BookEvent.objects.filter(booker=request.user)
-#
-# # class BookedSerializer(serializers.ModelSerializer):
-#     booker = serializers.SerializerMethodField()
-#     class Meta :
-#         model = BookEvent
-#         fields = ['booker']
-#     def get_booker(self,obj):
-#         return BookEvent.objects.filter(booker=request.user)
+
+class EventTitleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Event
+        fields = ['title']

@@ -1,34 +1,23 @@
-{% extends "base.html" %}
-{% load static %}
-
-
-{% block title %}Detail{% endblock title %}
-
-{% block content %}
-
+{% extends "base.html" %} {% load static %} {% block title %}Detail{% endblock title %} {% block content %}
 
 <!-- بوز -->
 
-      <style>
-        body
-        {
-        background: url({{pic}})no-repeat center center fixed ;
+<style>
+    body {
+        background: url({{pic}})no-repeat center center fixed;
         background-size: cover
-      }
-      </style>
-
-
-
+    }
+</style>
 
 <div class="container ">
-  <div class="row mt-5 mb-5">
+    <div class="row mt-5 mb-5">
 
-  <div class="col-md-6 mt-5">
-    <div class="card">
+        <div class="col-md-6 mt-5">
+            <div class="card">
 
-      <h1 class="card-header">Event Info</center></h1>
-    <div class="card-body">
-      <h2>
+                <h1 class="card-header">Event Info</center></h1>
+                <div class="card-body">
+                    <h2>
         <b>Event title :  </b>  <small>{{event.title}}</small>
         <br>
         <b>Description :  </b> <small>{{event.description}}</small>
@@ -44,58 +33,59 @@
         <b>Event type :  </b><small>{{event.event_type}}</small><br>
         <b>Event location:  </b><small>{{event.location}}</small><br>
         <b>Event time :  </b><small>{{event.time}}</small><br>
-      </h2>
+      </h2> {%if event.organizer == request.user %}
+                    <a class="btn btn-outline-danger btn-lg" href="{% url 'event-update' event.id %}" role="button">Update</a> {% endif %} {%if not event.tickets == total%}
+                    <a class="btn btn-outline-success btn-lg" href="{% url 'event-book' event.id total %}" role="button">Book Now!</a> {% else %}
+                    <a class="btn btn-outline-success btn-lg disabled" role="button">Full :(</a>
+                    <!-- make not clickable -->
+                    {% endif %}
+                </div>
 
-        {%if event.organizer == request.user  %}
-        <a class="btn btn-outline-danger btn-lg"   href="{% url 'event-update' event.id %}" role="button">Update</a>
+            </div>
 
-          {% endif %}
-        {%if not event.tickets == total%}
-          <a class="btn btn-outline-success btn-lg"   href="{% url 'event-book' event.id total %}" role="button">Book Now!</a>
-          {% else %}
-          <a class="btn btn-outline-success btn-lg disabled"  role="button" >Full :(</a>
-          <!-- make not clickable -->
-          {% endif %}
-      </div>
+        </div>
+        <div class="col-md-6 mt-5">
+
+            {% if event.logo %}
+            <img class="card-img-top" src="{{event.logo.url}}" alt="Hey Noob."> {% endif %}
+        </div>
 
     </div>
 
-  </div>
-  <div class="col-md-6 mt-5">
-
-  {% if event.logo %}
-      <img class="card-img-top" src="{{event.logo.url}}" alt="Hey Noob.">
-    {% endif %}
-  </div>
-
-
-
-  </div>
-
-  {%if event.organizer == request.user  %}
+    {%if event.organizer == request.user %}
     <div class=" mt-5 card border-dark mb-3" style="max-width: 2500px ;border :solid">
-      <table class="table table table-hover">
-        <thead class ="thead-dark">
-          <tr>
-            <th scope="col"><center><h4>User</h4></center></th>
-            <th scope="col"><center><h4>Tickets Booked</h4></center></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for book in tickets %}
-            <tr>
-              <td><center><h4>{{book.booker}}</h4></center></td>
-              <td><center><h4>{{book.number_of_tickets}}</h4></center></td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+        <table class="table table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">
+                        <center>
+                            <h4>User</h4></center>
+                    </th>
+                    <th scope="col">
+                        <center>
+                            <h4>Tickets Booked</h4></center>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in tickets %}
+                <tr>
+                    <td>
+                        <center>
+                            <h4>{{book.booker}}</h4></center>
+                    </td>
+                    <td>
+                        <center>
+                            <h4>{{book.number_of_tickets}}</h4></center>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-  {% endif %}
+    {% endif %}
 
-  </div>
+</div>
 
-<br><br>
-
-
-{% endblock content %}
+<br>
+<br> {% endblock content %}

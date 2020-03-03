@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from events.models import Event , BookEvent
 from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView, DestroyAPIView, CreateAPIView
-from .serializers import RegisterSerializer , EventSerializer , UpdateSerializer ,BookEventSerializer
+from .serializers import RegisterSerializer , EventSerializer , UpdateSerializer ,BookEventSerializer,EventTitleSerializer
 from datetime import datetime
 from rest_framework.permissions import IsAuthenticated , AllowAny
 from .permissions import IsOrganizer
@@ -28,6 +28,7 @@ class EventOrganizersList(ListAPIView):
     def get_queryset(self):
         # self.check_permission(request)
         return Event.objects.filter(organizer=self.request.user)
+    # needs an id
 # .................................................................
 class UpdateEvent(RetrieveUpdateAPIView):
     queryset = Event.objects.all()
@@ -38,7 +39,8 @@ class UpdateEvent(RetrieveUpdateAPIView):
 
 
 class CreateEvent(CreateAPIView):
-    serializer_class = EventSerializer
+    serializer_class = EventTitleSerializer
+
 
 
 class BookEventView(CreateAPIView):
@@ -52,11 +54,15 @@ class BookedList(ListAPIView):
     serializer_class = BookEventSerializer
     def get_queryset(self):
         return BookEvent.objects.filter(booker=self.request.user)
+# no id needed
 
-class MyBookers(RetrieveAPIView):
-    queryset=BookEvent.objects.all()
+
+
+class MyBookers(ListAPIView):
     lookup_field = 'event'
     lookup_url_kwarg = 'event_id'
     permission_classes = [IsAuthenticated]
     serializer_class = BookEventSerializer
-    # def get_queryset(self):
+    def get_queryset(self):
+        event_obj = Event.objects.get(id=self.kwargs.get("event_id"))
+        return BookEvent.objects.filter(event= event_obj)
