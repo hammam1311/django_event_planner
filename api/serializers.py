@@ -28,12 +28,12 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class EventTitleSerializer(serializers.ModelSerializer):
-    # organizer = serializers.SerializerMethodField()
+    organizer = serializers.SerializerMethodField()
     class Meta:
         model = Event
-        fields = ['id','description',]
-    # def get_organizer(self,obj):
-    #         return self.request.user
+        fields = ['title','organizer','id','description',]
+    def get_organizer(self,obj):
+            return self.request.user
 
 
 class BookEventSerializer(serializers.ModelSerializer):

@@ -11,6 +11,10 @@ urlpatterns = [
 	path('events/<int:event_id>/update', event_update, name='event-update'),
 	path('events/create', event_create, name='events-create'),
 	path('events/<int:event_id>/<int:tickets_total>/book', book_event, name='event-book'),
+	path('create/profile/', create_profile, name='create-profile'),
+	path('myprofile/', myprofile, name='my-profile'),
+
+
 
 	#...............................................
     path('signup/', Signup.as_view(), name='signup'),

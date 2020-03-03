@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% load static %} {% block title %}Profile{% endblock title %} {% block content %}
+<!-- ............................ترويسة  -->
+
+<!-- بوز -->
+
+<style>
+    body {
+        background: url({{pic}})no-repeat center center fixed;
+        background-size: cover
+    }
+</style>
+
+<div class="container ">
+    <div class="row mt-5 mb-5">
+
+        <div class="col-md-6 mt-5">
+            <div class="card">
+              {%for profile in profiles %}
+                <h1 class="card-header">Profile {{profile.username}}</h1>
+                <div class="card-body">
+                    <h2>
+        <b>First Name:  </b>  <small>{{profile.firstname}}2</small>
+        <br>
+        <b>last Name :  </b> <small>{{profile.lastname}}2</small>
+        <br>
+        </h2>
+        {% endfor %}
+      <!--  {%if event.organizer == request.user %}
+                    <a class="btn btn-outline-danger btn-lg" href="{% url 'event-update' event.id %}" role="button">Update</a> {% endif %} {%if not event.tickets == total%}
+                    <a class="btn btn-outline-success btn-lg" href="{% url 'event-book' event.id total %}" role="button">Book Now!</a> {% else %}
+                    <a class="btn btn-outline-success btn-lg disabled" role="button">Full :(</a>
+                    <!-- make not clickable -->
+                    <!-- {% endif %} -->
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-6 mt-5">
+
+            {% if profile.image %}
+            <img class="card-img-top" src="{{ profile.image.url}}" alt="Hey Noob."> {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+<br> {% endblock content %}

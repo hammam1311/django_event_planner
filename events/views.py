@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from .forms import UserSignup, UserLogin
 from django.contrib import messages
-from .models import Event , BookEvent
-from .forms import EventForm , BookEventForm
+from .models import Event , BookEvent,Profile
+from .forms import EventForm , BookEventForm,ProfileForm
 from datetime import datetime
 from django.db.models import Q
 
@@ -142,6 +142,33 @@ def book_event (request,event_id,tickets_total):
 
 
 
+def create_profile(request):
+    form = ProfileForm()
+    temp = Profile.objects.filter(username=request.user)
+    if request.user.is_anonymous:
+        return redirect('login')
+    if request.method == "POST":
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            if temp != "" :
+                messages.warning(request, "you already have a profile !")
+                return redirect('my-profile')
+            profile.username = request.user
+            profile.save()
+            messages.success(request, "Created profile Successfully ! Welcome to our family")
+            return redirect('my-profile')
+    context = {
+        "form":form,
+    }
+    return render(request, 'create_profile.html', context)
+
+def myprofile (request):
+    profile= Profile.objects.filter(username=request.user)
+    context = {
+            "profiles":profile,
+    }
+    return render(request, 'my_profile.html', context)
 #..................................................................
 #..................................................................
 #..................................................................
