@@ -18,7 +18,7 @@
           <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'event-list' %}">{{ request.user }}</a>
+          <a class="nav-link" href="{% url 'user-page' %}">{{ request.user }}</a>
         </li>
         {% endif %}
         <form action="{% url 'event-list' %}" method="GET">

@@ -65,7 +65,33 @@ def event_detail(request,event_id):
     }
     return render(request,"detail.html",context)
 
+# user
+def user_page(request):
+    events=Event.objects.all()
+    date_check=Event.objects.filter(date__gte=datetime.today())
+    booked=BookEvent.objects.filter(booker=request.user)
+    passed=[]
+    future=[]
+    for book in booked :
+        if book.event.date>datetime.today().date():
+            future.append(book)
+        if book.event.date<=datetime.today().date():
+            passed.append(book)
 
+    events=Event.objects.filter(date__gte=datetime.today())
+    query = request.GET.get("q")
+    if query:
+        events = events.filter(
+            Q(title__icontains=query)|
+            Q(description__icontains=query)|
+            Q(organizer__username__icontains=query)
+            ).distinct()
+    context={
+    "events":events,
+    "passed":passed,
+    "future":future
+    }
+    return render(request,"user.html",context)
 #Create
 def event_create(request):
     form = EventForm()

@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% load static %} {% block content %}
-<header class="masthead text-center " style="background-color:#CCCCCC	;">
+<header class="masthead text-center " >
 
     <div class="masthead-content">
         <div class="container">
@@ -79,34 +79,7 @@
                 </div>
             </div>
             <!-- ....................................User organized events ........................... -->
-            <h2 class="masthead-subheading mb-0" style="color: white;">Events I organized</h2>
-            <div class="card-body">
-                {% for event in events %} {%if request.user == event.organizer%}
-
-                <a href="{% url 'event-detail' event.id %}" class="btn btn-outline-dark"><h1 class="card-title">{{event.title}}  <h4>{{event.date}}</h4></h1></a> {%endif%} {% endfor %}
-            </div>
-
-            <!-- ..................................................All Upcomig events ................... -->
-            <!-- <h3 class="masthead-subheading mb-0" style="color: white;">Upcomig Events</h3> -->
-            <div class="card-body">
-                <!-- {% for event in events %}
-            {%if not request.user == event.organizer%}
-              <a href="{% url 'event-detail' event.id %}" class="btn btn-outline-dark"><h1 class="card-title">{{event.title}}  <h6>{{event.date}}</h6></h1></a>
-                <br><br>
-                {%endif%}
-            {% endfor %} -->
-                <!-- ..........................................Events I attining................. -->
-                <h3 class="masthead-subheading mb-0" style="color: white;">Events I'm attending</h3> {%for event in future %}
-                <a href="{% url 'event-detail' event.event.id %}" class="btn btn-outline-dark"><h1 class="card-title">{{event.event.title}}  <h6>{{event.event.date}}</h6></h1></a> {% endfor %}
-
-                <!-- ..........................................Events I attinded................. -->
-                <br>
-                <br>
-                <h3 class="masthead-subheading mb-0" style="color: white;">Events I attended</h3> {% for event in passed %}
-                <a href="{% url 'event-detail' event.event.id %}" class="btn btn-outline-dark"><h1 class="card-title">{{event.event.title}}  <h6>{{event.event.date}}</h6></h1></a>
-                <br>
-                <br> {% endfor %}
-            </div>
+            
 
         </div>
     </div>

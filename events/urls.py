@@ -14,6 +14,7 @@ urlpatterns = [
 	path('create/profile/', create_profile, name='create-profile'),
 	path('myprofile/', myprofile, name='my-profile'),
 	path('wm/list', event_list_wm,name='wm-list'),
+	path('userpage/', user_page,name='user-page'),
 
 
 
