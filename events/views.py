@@ -151,7 +151,7 @@ def create_profile(request):
         form = ProfileForm(request.POST)
         if form.is_valid():
             profile = form.save(commit=False)
-            if temp != "" :
+            if temp != [] :
                 messages.warning(request, "you already have a profile !")
                 return redirect('my-profile')
             profile.username = request.user
@@ -169,6 +169,36 @@ def myprofile (request):
             "profiles":profile,
     }
     return render(request, 'my_profile.html', context)
+
+
+def event_list_wm(request):
+    events=Event.objects.all()
+    date_check=Event.objects.filter(date__gte=datetime.today())
+    booked=BookEvent.objects.filter(booker=request.user)
+    passed=[]
+    future=[]
+    for book in booked :
+        if book.event.date>datetime.today().date():
+            future.append(book)
+        if book.event.date<=datetime.today().date():
+            passed.append(book)
+
+    events=Event.objects.filter(date__gte=datetime.today())
+    query = request.GET.get("q")
+    if query:
+        events = events.filter(
+            Q(title__icontains=query)|
+            Q(description__icontains=query)|
+            Q(organizer__username__icontains=query)
+            ).distinct()
+    context={
+    "events":events,
+    "passed":passed,
+    "future":future
+
+
+    }
+    return render(request,"wmlist.html",context)
 #..................................................................
 #..................................................................
 #..................................................................

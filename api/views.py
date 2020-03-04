@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from events.models import Event , BookEvent
 from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView, DestroyAPIView, CreateAPIView
-from .serializers import RegisterSerializer , EventSerializer , UpdateSerializer ,BookEventSerializer,EventTitleSerializer
+from .serializers import RegisterSerializer , EventSerializer , UpdateSerializer ,BookEventSerializer,EventTitleSerializer,BookingEventSerializer
 from datetime import datetime
 from rest_framework.permissions import IsAuthenticated , AllowAny
 from .permissions import IsOrganizer
@@ -22,13 +22,14 @@ class EventsList(ListAPIView):
     # permission_classes = [IsAuthenticated]
 # ................................list-Organizer.....
 class EventOrganizersList(ListAPIView):
-    # queryset = Event.objects.filter(organizer=self.request.organizer)
+    lookup_field = 'organizer_id'
+    lookup_url_kwarg = 'event_id'
     permission_classes = [IsAuthenticated]
     serializer_class = EventSerializer
+
     def get_queryset(self):
-        # self.check_permission(request)
-        return Event.objects.filter(organizer=self.request.user)
-    # needs an id
+        return Event.objects.filter(organizer= self.kwargs.get("event_id"))
+
 # .................................................................
 class UpdateEvent(RetrieveUpdateAPIView):
     queryset = Event.objects.all()
@@ -40,21 +41,25 @@ class UpdateEvent(RetrieveUpdateAPIView):
 
 class CreateEvent(CreateAPIView):
     serializer_class = EventTitleSerializer
+    def perform_create(self, serializer):
+        serializer.save(organizer=self.request.user)
+
 
 
 
 class BookEventView(CreateAPIView):
-    serializer_class = BookEventSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'event_id'
+    serializer_class = BookingEventSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(booker=self.request.user, event_id=self.kwargs['event_id'] )
 
 class BookedList(ListAPIView):
-    # queryset = BookEvent.objects.all()
-    lookup_field = 'booker'
-    lookup_url_kwarg = 'event_id'
     permission_classes = [IsAuthenticated]
     serializer_class = BookEventSerializer
     def get_queryset(self):
         return BookEvent.objects.filter(booker=self.request.user)
-# no id needed
 
 
 

@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-
+{% load static %}
 {% block title %}Create{% endblock title %}
 
 {% block content %}
-
+<center>
 <h3>
+<br><br>
+<div style="background-image: url({% static 'img/wp-sb.jpg' %});">
+
+<div class="container"
+
 <div class="card">
-  <h5 class="card-header">Create Event</h5>
+  <div class="card border-dark mb-10 mt-10" style="max-width: 1200px max-height:30px border :solid">
+  <h3 class="card-header">Create An Event</h3>
   <div class="card-body">
     <p class="card-text">
         <form action="{% url 'events-create' %}" method="POST">
@@ -19,6 +25,18 @@
         </form>
     </p>
   </div>
+  <div class="card-footer text-muted">
+  <center>
+    <h3><b>"</b>
+      I am READY !!  I am READY !! I am READY !!
+      <b>"</b>
+    </h3>
+  <small>spongebob<small>
+       <center>
+  </div>
 </div>
-</h3>
+</div></div>
+
+
+</h3><center>
 {% endblock content %}

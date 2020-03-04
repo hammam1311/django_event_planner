@@ -1,28 +1,45 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-
-{% block title %}book{% endblock title %}
+{% load static %}
+{% block title %}Create{% endblock title %}
 
 {% block content %}
-<header>
+<center>
+<h3>
+<br><br>
+<div style="background-image: url({% static 'img/wp-sq.jpg' %});">
 
-<br>
+<div class="container"
+
 <div class="card">
-  <br><br>  <br><br>
-  <h2 class="card-header"><center>book: {{event_obj.title}}</center></h2>  <div class="card-body">
+  <div class="card border-dark mb-1 mt-10" style="max-width: 1200px max-height:30px border :solid">
+    <h2 class="card-header"><center>book tickets for: {{event_obj.title}}</center></h2>  <div class="card-body">
   <div class="card-body">
     <p class="card-text">
-        <form action="{% url 'event-book' event_obj.id total %}" method="POST" enctype="multipart/form-data">
+      <form action="{% url 'event-book' event_obj.id total %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{form|crispy}}
-        <center>    <input type="submit" value="book" class="btn btn-lg btn-outline-success"></center>
-            <br><br>
+            <input type="submit" value="Book now!" class="btn btn-lg btn-outline-success">
+            <br><br>  <br><br>
+
         </form>
     </p>
   </div>
 
 
-</div>
-</header>
 
+</div>
+<div class="card-footer text-muted">
+<center>
+  <h3><b>"</b>
+    Please come again *under his breath* when I'm not working
+    <b>"</b>
+  </h3>
+<small>Squidward<small>
+     <center>
+</div>
+</div></div>
+
+
+</h3><center>
 {% endblock content %}

@@ -24,6 +24,7 @@
         <br>
         <b>Event date:  </b><small>{{event.date }}</small>
         <br>
+        <b>Event time :  </b><small>{{event.time}}</small><br>
         <b>Organizer:  </b><small>{{event.organizer}}</small>
         <br>
         <b>Price : </b><small>{{event.price}}</small>
@@ -32,11 +33,13 @@
         <br>
         <b>Event type :  </b><small>{{event.event_type}}</small><br>
         <b>Event location:  </b><small>{{event.location}}</small><br>
-        <b>Event time :  </b><small>{{event.time}}</small><br>
       </h2> {%if event.organizer == request.user %}
-                    <a class="btn btn-outline-danger btn-lg" href="{% url 'event-update' event.id %}" role="button">Update</a> {% endif %} {%if not event.tickets == total%}
-                    <a class="btn btn-outline-success btn-lg" href="{% url 'event-book' event.id total %}" role="button">Book Now!</a> {% else %}
-                    <a class="btn btn-outline-success btn-lg disabled" role="button">Full :(</a>
+                    <a class="btn btn-outline-danger btn-lg" href="{% url 'event-update' event.id %}" role="button">Update</a>
+                     {% endif %}
+                     {%if not event.tickets == total%}
+                    <a class="btn btn-outline-success btn-lg" href="{% url 'event-book' event.id total %}" role="button">Book Now!</a>
+                    {% else %}
+                    <a class="btn btn-outline-success btn-lg disabled" role="button">Full :( </a>
                     <!-- make not clickable -->
                     {% endif %}
                 </div>
